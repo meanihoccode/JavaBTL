@@ -46,7 +46,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
-        return userConverter.convertToDto(userRepository.findOneByUserNameAndStatus(name, status));
+        return userConverter.convertToDto(userRepository.findByUserNameAndStatus(name, status));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO findOneByUserName(String userName) {
-        UserEntity userEntity = userRepository.findOneByUserName(userName);
+        UserEntity userEntity = userRepository.findByUserName(userName);
         UserDTO userDTO = userConverter.convertToDto(userEntity);
         return userDTO;
     }
@@ -164,7 +164,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserDTO updateProfileOfUser(String username, UserDTO updateUser) {
-        UserEntity oldUser = userRepository.findOneByUserName(username);
+        UserEntity oldUser = userRepository.findByUserName(username);
         oldUser.setFullName(updateUser.getFullName());
         return userConverter.convertToDto(userRepository.save(oldUser));
     }
@@ -220,5 +220,67 @@ public class UserService implements IUserService {
             staffs.add(staffResponseDTO);
         }
         return staffs;
+    }
+
+    @Override
+    @Transactional
+    public UserDTO register(RegisterDTO registerDTO) throws MyException {
+        // Validate mật khẩu
+        if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
+            throw new MyException("Mật khẩu xác nhận không khớp");
+        }
+
+        // Kiểm tra username đã tồn tại
+        try {
+            UserEntity existingUser = userRepository.findByUserName(registerDTO.getUserName());
+            if (existingUser != null) {
+                throw new MyException("Tên đăng nhập đã tồn tại");
+            }
+        } catch (Exception e) {
+            if (!e.getMessage().contains("Tên đăng nhập đã tồn tại")) {
+                // Ignore NoResultException, continue
+            } else {
+                throw new MyException("Tên đăng nhập đã tồn tại");
+            }
+        }
+
+        // Kiểm tra email đã tồn tại
+        try {
+            UserEntity existingEmail = userRepository.findByEmail(registerDTO.getEmail());
+            if (existingEmail != null) {
+                throw new MyException("Email đã được sử dụng");
+            }
+        } catch (Exception e) {
+            if (!e.getMessage().contains("Email đã được sử dụng")) {
+                // Ignore NoResultException, continue
+            } else {
+                throw new MyException("Email đã được sử dụng");
+            }
+        }
+
+        // Tạo user mới
+        UserEntity newUser = new UserEntity();
+        newUser.setUserName(registerDTO.getUserName());
+        newUser.setFullName(registerDTO.getFullName());
+        newUser.setEmail(registerDTO.getEmail());
+        newUser.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        newUser.setStatus(1); // Active
+
+        // Gán role GUEST mặc định
+        RoleEntity guestRole = null;
+        try {
+            guestRole = roleRepository.findOneByCode("GUEST");
+        } catch (Exception e) {
+            // Handle exception if role not found
+            guestRole = null;
+        }
+
+        if (guestRole == null) {
+            throw new MyException("Role GUEST không tồn tại trong hệ thống");
+        }
+        newUser.setRoles(Stream.of(guestRole).collect(Collectors.toList()));
+
+        UserEntity savedUser = userRepository.save(newUser);
+        return userConverter.convertToDto(savedUser);
     }
 }

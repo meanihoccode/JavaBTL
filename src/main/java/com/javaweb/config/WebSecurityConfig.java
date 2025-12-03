@@ -49,7 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(org.springframework.http.HttpMethod.DELETE, "/api/buildings/**").hasRole("MANAGER")
                 // STAFF có thể truy cập các endpoint khác
                 .antMatchers("/admin/**").hasAnyRole("MANAGER","STAFF")
-                .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**", "/j_spring_security_check").permitAll()
+                // GUEST chỉ được xem và tìm kiếm tòa nhà
+                .antMatchers("/san-pham", "/trang-chu", "/api/buildings/**").hasAnyRole("GUEST", "STAFF", "MANAGER")
+                .antMatchers("/login", "/register", "/resource/**", "/api/auth/**", "/j_spring_security_check").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").usernameParameter("j_username").passwordParameter("j_password").permitAll()
                 .loginProcessingUrl("/j_spring_security_check")

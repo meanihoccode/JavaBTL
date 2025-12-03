@@ -2,6 +2,7 @@ package com.javaweb.service;
 
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.PasswordDTO;
+import com.javaweb.model.dto.RegisterDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.exception.MyException;
 import com.javaweb.model.response.StaffResponseDTO;
@@ -25,4 +26,5 @@ public interface IUserService {
     List<UserDTO> getAllUsers(Pageable pageable);
     int countTotalItems();
     Map<Long, String> listStaff();
+    UserDTO register(RegisterDTO registerDTO) throws MyException;
 }

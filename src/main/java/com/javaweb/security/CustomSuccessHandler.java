@@ -37,9 +37,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         if (isAdmin(roles)) {
             url = SystemConstant.ADMIN_HOME;
             System.out.println("DEBUG - Redirecting MANAGER to: " + url);
-        } else if (isUser(roles)) {
+        } else if (isStaff(roles)) {
             url = SystemConstant.ADMIN_HOME;  // STAFF cũng vào admin
             System.out.println("DEBUG - Redirecting STAFF to: " + url);
+        } else if (isGuest(roles)) {
+            url = SystemConstant.HOME;  // GUEST vào trang chủ
+            System.out.println("DEBUG - Redirecting GUEST to: " + url);
         } else {
             url = "/login";  // Fallback
             System.out.println("DEBUG - No role matched, fallback to: " + url);
@@ -62,8 +65,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return false;
     }
 
-    private boolean isUser(List<String> roles) {
+    private boolean isStaff(List<String> roles) {
         if (roles.contains(SystemConstant.STAFF_ROLE)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isGuest(List<String> roles) {
+        if (roles.contains("ROLE_GUEST")) {
             return true;
         }
         return false;
