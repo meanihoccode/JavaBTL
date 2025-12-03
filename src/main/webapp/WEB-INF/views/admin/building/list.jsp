@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: ACER
@@ -205,17 +206,20 @@
                   </svg>
                 </button>
               </a>
-              <button class="btn btn-danger" style="border-radius: 4px;" id="btnDeleteBuilding">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                     fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
-                  <path
-                          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1" />
-                  <path
-                          d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z" />
-                  <path
-                          d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
-                </svg>
-              </button>
+              <%-- Chỉ MANAGER mới thấy nút Xóa tòa nhà --%>
+              <security:authorize access="hasRole('ROLE_MANAGER')">
+                <button class="btn btn-danger" style="border-radius: 4px;" id="btnDeleteBuilding">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                       fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
+                    <path
+                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1" />
+                    <path
+                            d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z" />
+                    <path
+                            d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
+                  </svg>
+                </button>
+              </security:authorize>
             </div>
           </div>
         </div>
@@ -247,17 +251,23 @@
               <display:column property="brokerageFee" title="Phí môi giới" class="center"/>
               <display:column title="Thao tác" class="d-inline-flex">
                 <div class="hidden-sm hidden-xs btn-group">
-                  <button class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${buildingList.id})">
-                    <i class="ace-icon fa fa-check bigger-120"></i>
-                  </button>
+                  <%-- Chỉ MANAGER mới thấy nút Giao tòa nhà --%>
+                  <security:authorize access="hasRole('ROLE_MANAGER')">
+                    <button class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assignmentBuilding(${buildingList.id})">
+                      <i class="ace-icon fa fa-check bigger-120"></i>
+                    </button>
+                  </security:authorize>
                   <a href="/admin/building-edit-${buildingList.id}">
                     <button class="btn btn-xs btn-info">
                       <i class="ace-icon fa fa-pencil bigger-120" title="Sửa tòa nhà"></i>
                     </button>
                   </a>
-                  <button class="btn btn-xs btn-danger btnDeleteSingleBuilding" value="${buildingList.id}">
-                    <i class="ace-icon fa fa-trash-o bigger-120" title="Xóa tòa nhà"></i>
-                  </button>
+                  <%-- Chỉ MANAGER mới thấy nút Xóa --%>
+                  <security:authorize access="hasRole('ROLE_MANAGER')">
+                    <button class="btn btn-xs btn-danger btnDeleteSingleBuilding" value="${buildingList.id}">
+                      <i class="ace-icon fa fa-trash-o bigger-120" title="Xóa tòa nhà"></i>
+                    </button>
+                  </security:authorize>
                 </div>
               </display:column>
             </display:table>

@@ -4,8 +4,8 @@ public class SystemConstant {
     /*Spring security 4: ROLE_ADMIN, Spring security 3 not required*/
     public static final String ONE_EQUAL_ONE = " WHERE 1 = 1 ";
     public static final String ADMIN_ROLE = "ROLE_ADMIN";
-    /*Spring security 4: ROLE_ADMIN, Spring security 3 not required*/
-    public static final String USER_ROLE = "ROLE_USER";
+    /*Spring security 4: ROLE_STAFF, Spring security 3 not required*/
+    public static final String STAFF_ROLE = "ROLE_STAFF";
     public static final String MANAGER_ROLE = "ROLE_MANAGER";
     public static final String HOME = "/trang-chu";
     public static final String ADMIN_HOME = "/admin/home";

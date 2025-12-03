@@ -42,11 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-                http.csrf().disable()
+        http.csrf().disable()
                 .authorizeRequests()
-                        //.antMatchers("/admin/building-edit").hasAnyRole("MANAGER")
-                        .antMatchers("/admin/**").hasAnyRole("MANAGER","STAFF","ADMIN")
-                        .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**").permitAll()
+                // Chỉ MANAGER mới được xóa tòa nhà (DELETE method)
+                .antMatchers("/admin/building-edit", "/admin/user-edit-{id}").hasAnyRole("MANAGER")
+                .antMatchers(org.springframework.http.HttpMethod.DELETE, "/api/buildings/**").hasRole("MANAGER")
+                // STAFF có thể truy cập các endpoint khác
+                .antMatchers("/admin/**").hasAnyRole("MANAGER","STAFF")
+                .antMatchers("/login", "/resource/**", "/trang-chu", "/api/**", "/j_spring_security_check").permitAll()
                 .and()
                 .formLogin().loginPage("/login").usernameParameter("j_username").passwordParameter("j_password").permitAll()
                 .loginProcessingUrl("/j_spring_security_check")

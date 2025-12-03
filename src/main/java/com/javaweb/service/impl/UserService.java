@@ -4,6 +4,7 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.model.dto.PasswordDTO;
+import com.javaweb.model.dto.RegisterDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.entity.UserEntity;
