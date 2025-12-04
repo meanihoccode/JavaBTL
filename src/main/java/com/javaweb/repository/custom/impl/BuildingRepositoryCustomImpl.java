@@ -87,7 +87,7 @@ public class BuildingRepositoryCustomImpl implements BuildingRepositoryCustom {
                     if (value != null) {
                         if (field.getType() == Long.class || field.getType() == Integer.class) {
                             where.append(" AND b.").append(fieldName).append(" = ").append(value);
-                        } else if (field.getType() == String.class) {
+                        } else if (field.getType() == String.class ) {
                             where.append(" AND b.").append(fieldName).append(" LIKE '%").append(value).append("%'");
                         }
                     }

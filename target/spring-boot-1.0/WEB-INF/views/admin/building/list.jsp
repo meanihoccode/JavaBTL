@@ -194,6 +194,7 @@
 
             <div class="cta" style="position: absolute; right: 30px; transform: translateY(-50%);">
               <a href="/admin/building-edit">
+                  <security:authorize access="hasRole('ROLE_MANAGER')">
                 <button class="btn btn-info" style="border-radius: 4px;" id="btnAddBuilding">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                        fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
@@ -207,7 +208,7 @@
                 </button>
               </a>
               <%-- Chỉ MANAGER mới thấy nút Xóa tòa nhà --%>
-              <security:authorize access="hasRole('ROLE_MANAGER')">
+
                 <button class="btn btn-danger" style="border-radius: 4px;" id="btnDeleteBuilding">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                        fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
